@@ -1,0 +1,29 @@
+# Node modules (todas as pastas node_modules)
+**/node_modules
+
+# Build outputs (todas as pastas dist)
+**/dist
+
+# Vite cache (apenas o frontend)
+**/.vite
+
+# Logs
+npm-debug.log*
+
+# IDEs e editor de código
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+**/.env
+**/.env.local
+**/.env.*.local
