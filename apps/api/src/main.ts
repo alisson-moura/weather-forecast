@@ -11,6 +11,7 @@ async function bootstrap() {
 			transform: true,
 		}),
 	);
+	app.enableVersioning();
 	await app.listen(3000);
 }
 bootstrap();
