@@ -20,7 +20,7 @@ describe('Get cities by name', () => {
 			.compile();
 
 		app = moduleFixture.createNestApplication();
-		app.enableVersioning()
+		app.enableVersioning();
 		await app.init();
 	});
 
