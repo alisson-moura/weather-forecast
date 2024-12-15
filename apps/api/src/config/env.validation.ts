@@ -11,7 +11,20 @@ export class EnvironmentVariables {
 	OPENWEATHER_COUNTRY_CODE: string;
 
 	@IsUrl()
+	@IsNotEmpty()
 	API_GEO_BASE_URL: string;
+
+	@IsString()
+	@IsNotEmpty()
+	OPENWEATHER_LANG_CODE: string;
+
+	@IsUrl()
+	@IsNotEmpty()
+	API_WEATHER_FORECAST_BASE_URL: string;
+
+	@IsString()
+	@IsNotEmpty()
+	OPENWEATHER_UNIT: string;
 
 	@IsInt()
 	PORT: number;
