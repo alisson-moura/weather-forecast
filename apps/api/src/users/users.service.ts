@@ -29,13 +29,6 @@ export class UserServices {
 		});
 	}
 
-	async checkCredentials(input: { email: string; password: string }): Promise<boolean> {
-		const user = await this.findByEmail(input.email);
-		if (user == null) return false;
-
-		return bcrypt.compareSync(input.password, user.password);
-	}
-
 	async findByEmail(email: string): Promise<User | null> {
 		const user = await this.prismaService.user.findUnique({
 			where: {
@@ -43,5 +36,12 @@ export class UserServices {
 			},
 		});
 		return user;
+	}
+
+	checkCredentials(input: { email: string; password: string; user: User }): boolean {
+		if (input.email != input.user.email) {
+			return false;
+		}
+		return bcrypt.compareSync(input.password, input.user.password);
 	}
 }

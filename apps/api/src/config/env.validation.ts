@@ -31,6 +31,13 @@ export class EnvironmentVariables {
 
 	@IsInt()
 	BCRYPT_SALT_ROUNDS: number;
+
+	@IsInt()
+	JWT_EXPIRES_IN: number;
+
+	@IsString()
+	@IsNotEmpty()
+	JWT_SECRET: string;
 }
 
 export function validateEnv(config: Record<string, unknown>) {
