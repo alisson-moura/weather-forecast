@@ -16,7 +16,7 @@ export class GeocodingClient {
 
 	public async findByName(
 		name: string,
-	): Promise<Array<{ name: string; lat: number; lon: number }>> {
+	): Promise<Array<{ name: string; state: string; lat: number; lon: number }>> {
 		try {
 			const { data } = await firstValueFrom(
 				this.httpService.get<GeocodingWeatherMapAPIResponseDto[]>(
@@ -31,6 +31,7 @@ export class GeocodingClient {
 			);
 			return data.map((city) => ({
 				name: city.name,
+				state: city.state!,
 				lat: city.lat,
 				lon: city.lon,
 			}));

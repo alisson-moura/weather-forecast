@@ -44,8 +44,8 @@ describe('Geocoding API Client', () => {
 
 	it('Deve retornar uma lista de cidades', async () => {
 		mockResponse.data = [
-			{ name: 'Rio Preto', lat: 51.5074, lon: -0.1278 },
-			{ name: 'Votuporanga', lat: 40.7128, lon: -74.006 },
+			{ name: 'Rio Preto', state: 'São Paulo', lat: 51.5074, lon: -0.1278 },
+			{ name: 'Votuporanga', state: 'São Paulo', lat: 40.7128, lon: -74.006 },
 		];
 		httpService.get.mockReturnValueOnce(of(mockResponse));
 

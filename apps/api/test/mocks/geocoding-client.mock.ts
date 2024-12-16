@@ -4,6 +4,7 @@ export const mockGeocodingClient = {
 			return Promise.resolve([
 				{
 					name: 'São José do Rio Preto',
+					state: 'São Paulo',
 					lat: -20.8167,
 					lon: -49.3833,
 				},

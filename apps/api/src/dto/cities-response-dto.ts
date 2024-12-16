@@ -8,6 +8,12 @@ export class CitiesResponseDto {
 	name: string;
 
 	@ApiProperty({
+		description: 'Nome do Estado',
+		example: 'São Paulo',
+	})
+	state?: string;
+
+	@ApiProperty({
 		description: 'Latitude da cidade',
 		example: -23.1896,
 	})
