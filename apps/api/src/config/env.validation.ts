@@ -28,6 +28,9 @@ export class EnvironmentVariables {
 
 	@IsInt()
 	PORT: number;
+
+	@IsInt()
+	BCRYPT_SALT_ROUNDS: number;
 }
 
 export function validateEnv(config: Record<string, unknown>) {
