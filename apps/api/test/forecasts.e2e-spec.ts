@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
 import { AppModule } from '../src/app.module';
-import { WeatherForecastClient } from '../src/weather-map-api/weather-forecast-client';
+import { WeatherForecastClient } from '../src/forecasts/weather-map-api/weather-forecast-client';
 
 import { mockWeatherForecastClient } from './mocks/weather-forecast-client.mock';
 
