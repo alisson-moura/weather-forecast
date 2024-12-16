@@ -18,7 +18,6 @@ async function bootstrap() {
 		.setTitle('Weather Forecast')
 		.setDescription('Weather forecast API')
 		.setVersion('1.0')
-		.addTag('Cities')
 		.build();
 	const documentFactory = () => SwaggerModule.createDocument(app, config);
 	SwaggerModule.setup('docs', app, documentFactory);

@@ -1,189 +1,97 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class WeatherForecastCoordDto {
-	@IsNumber()
-	lat: number;
-
-	@IsNumber()
-	lon: number;
+	readonly lat: number;
+	readonly lon: number;
 }
 
 export class WeatherConditionDto {
-	@IsNumber()
-	id: number;
-
-	@IsString()
-	main: string;
-
-	@IsString()
-	description: string;
-
-	@IsString()
-	icon: string;
+	readonly id: number;
+	readonly main: string;
+	readonly description: string;
+	readonly icon: string;
 }
 
 export class WeatherMainDataDto {
-	@IsNumber()
-	temp: number;
-
-	@IsNumber()
-	feels_like: number;
-
-	@IsNumber()
-	temp_min: number;
-
-	@IsNumber()
-	temp_max: number;
-
-	@IsNumber()
-	pressure: number;
-
-	@IsNumber()
-	@IsOptional()
-	sea_level?: number;
-
-	@IsNumber()
-	@IsOptional()
-	grnd_level?: number;
-
-	@IsNumber()
-	humidity: number;
-
-	@IsNumber()
-	@IsOptional()
-	temp_kf?: number;
+	readonly temp: number;
+	readonly feels_like: number;
+	readonly temp_min: number;
+	readonly temp_max: number;
+	readonly pressure: number;
+	readonly sea_level?: number;
+	readonly grnd_level?: number;
+	readonly humidity: number;
+	readonly temp_kf?: number;
 }
 
 export class WeatherWindDto {
-	@IsNumber()
-	speed: number;
-
-	@IsNumber()
-	deg: number;
-
-	@IsNumber()
-	@IsOptional()
-	gust?: number;
+	readonly speed: number;
+	readonly deg: number;
+	readonly gust?: number;
 }
 
 export class WeatherRainDto {
-	@IsNumber()
-	@IsOptional()
-	'3h'?: number;
+	readonly '3h'?: number;
 }
 
 export class WeatherSnowDto {
-	@IsNumber()
-	@IsOptional()
-	'3h'?: number;
+	readonly '3h'?: number;
 }
 
 export class WeatherSysDto {
-	@IsString()
-	@IsOptional()
-	pod?: string;
+	readonly pod?: string;
 }
 
 export class WeatherForecastListItemDto {
-	@IsNumber()
-	dt: number;
+	readonly dt: number;
 
-	@ValidateNested()
 	@Type(() => WeatherMainDataDto)
-	main: WeatherMainDataDto;
+	readonly main: WeatherMainDataDto;
 
-	@IsArray()
-	@ValidateNested({ each: true })
 	@Type(() => WeatherConditionDto)
-	weather: WeatherConditionDto[];
+	readonly weather: WeatherConditionDto[];
 
-	@ValidateNested()
 	@Type(() => WeatherWindDto)
-	wind: WeatherWindDto;
+	readonly wind: WeatherWindDto;
 
-	@IsNumber()
-	@IsOptional()
-	clouds?: number;
+	readonly clouds?: number;
+	readonly visibility?: number;
+	readonly pop?: number;
 
-	@IsNumber()
-	@IsOptional()
-	visibility?: number;
-
-	@IsNumber()
-	@IsOptional()
-	pop?: number;
-
-	@ValidateNested()
 	@Type(() => WeatherRainDto)
-	@IsOptional()
-	rain?: WeatherRainDto;
+	readonly rain?: WeatherRainDto;
 
-	@ValidateNested()
 	@Type(() => WeatherSnowDto)
-	@IsOptional()
-	snow?: WeatherSnowDto;
+	readonly snow?: WeatherSnowDto;
 
-	@ValidateNested()
 	@Type(() => WeatherSysDto)
-	@IsOptional()
-	sys?: WeatherSysDto;
+	readonly sys?: WeatherSysDto;
 
-	@IsString()
-	dt_txt: string;
+	readonly dt_txt: string;
 }
 
 export class WeatherForecastCityDto {
-	@IsNumber()
-	@IsOptional()
-	id?: number;
+	readonly id?: number;
+	readonly name: string;
 
-	@IsString()
-	name: string;
-
-	@ValidateNested()
 	@Type(() => WeatherForecastCoordDto)
-	coord: WeatherForecastCoordDto;
+	readonly coord: WeatherForecastCoordDto;
 
-	@IsString()
-	country: string;
-
-	@IsNumber()
-	@IsOptional()
-	population?: number;
-
-	@IsNumber()
-	@IsOptional()
-	timezone?: number;
-
-	@IsNumber()
-	@IsOptional()
-	sunrise?: number;
-
-	@IsNumber()
-	@IsOptional()
-	sunset?: number;
+	readonly country: string;
+	readonly population?: number;
+	readonly timezone?: number;
+	readonly sunrise?: number;
+	readonly sunset?: number;
 }
 
 export class FiveDaysThreeHourForecastDto {
-	@IsString()
-	@IsOptional()
-	cod?: string;
+	readonly cod?: string;
+	readonly message?: string;
+	readonly cnt?: number;
 
-	@IsString()
-	@IsOptional()
-	message?: string;
-
-	@IsNumber()
-	@IsOptional()
-	cnt?: number;
-
-	@IsArray()
-	@ValidateNested({ each: true })
 	@Type(() => WeatherForecastListItemDto)
-	list: WeatherForecastListItemDto[];
+	readonly list: WeatherForecastListItemDto[];
 
-	@ValidateNested()
 	@Type(() => WeatherForecastCityDto)
-	city: WeatherForecastCityDto;
+	readonly city: WeatherForecastCityDto;
 }

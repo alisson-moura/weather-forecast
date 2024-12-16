@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { FiveDaysThreeHourForecastDto } from './dto/five-days-three-hour-forecast-response.dto';
@@ -7,6 +7,7 @@ import { FiveDaysThreeHourForecastDto } from './dto/five-days-three-hour-forecas
 import { AxiosError } from 'axios';
 import { firstValueFrom } from 'rxjs';
 
+@Injectable()
 export class WeatherForecastClient {
 	constructor(
 		private readonly httpService: HttpService,
@@ -30,7 +31,6 @@ export class WeatherForecastClient {
 			);
 			return data;
 		} catch (error) {
-			console.log(error);
 			const axiosError = error as AxiosError;
 			const errorMessage =
 				axiosError.response?.data || 'Erro ao acessar a API de previsão do tempo.';
