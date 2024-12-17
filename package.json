@@ -1,25 +1,26 @@
 {
-  "name": "weather-forecast",
-  "author": "alisson-moura",
-  "version": "1.0.0",
-  "description": "Weather forecast application",
-  "keywords": [
-    "weather",
-    "forecast"
-  ],
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "npm-run-all --parallel dev:api dev:web",
-    "dev:api": "npm run dev -w @weather-forecast/api",
-    "dev:web": "npm run dev -w @weather-forecast/web",
-    "build:api": "npm run build -w @weather-forecast/api",
-    "build:web": "npm run build -w @weather-forecast/web"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+	"name": "weather-forecast",
+	"author": "alisson-moura",
+	"version": "1.0.0",
+	"description": "Weather forecast application",
+	"keywords": [
+		"weather",
+		"forecast"
+	],
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"dev": "npm-run-all --parallel dev:api dev:web",
+		"dev:api": "npm run dev -w @weather-forecast/api",
+		"dev:web": "npm run dev -w @weather-forecast/web",
+		"build:api": "npm run build -w @weather-forecast/api",
+		"build:web": "npm run build -w @weather-forecast/web",
+		"test": "npm run test -w @weather-forecast/api"
+	},
+	"devDependencies": {
+		"npm-run-all": "^4.1.5"
+	}
 }
