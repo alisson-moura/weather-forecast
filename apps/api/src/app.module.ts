@@ -12,6 +12,8 @@ import { AuthController } from './users/auth/auth.controller';
 import { AuthService } from './users/auth/auth.service';
 import { JwtStrategy } from './users/auth/jwt.strategy';
 import { AuthLocalStrategy } from './users/auth/local.strategy';
+import { FavoritesController } from './users/favorites.controller';
+import { FavoritesService } from './users/favorites.service';
 import { PrismaService } from './users/prisma.service';
 import { UsersController } from './users/users.controller';
 import { UserServices } from './users/users.service';
@@ -30,12 +32,13 @@ import { UserServices } from './users/users.service';
 			}),
 		}),
 	],
-	controllers: [AppController, UsersController, AuthController],
+	controllers: [AppController, UsersController, AuthController, FavoritesController],
 	providers: [
 		GeocodingClient,
 		WeatherForecastClient,
 		UserServices,
 		AuthService,
+		FavoritesService,
 		PrismaService,
 		AuthLocalStrategy,
 		JwtStrategy,

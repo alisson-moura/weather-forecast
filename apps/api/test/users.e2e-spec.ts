@@ -28,12 +28,7 @@ describe('User Creation (e2e)', () => {
 	});
 
 	afterAll(async () => {
-		await prismaService.user.deleteMany();
 		await app.close();
-	});
-
-	beforeEach(async () => {
-		await prismaService.user.deleteMany();
 	});
 
 	describe('POST /users (User Creation)', () => {

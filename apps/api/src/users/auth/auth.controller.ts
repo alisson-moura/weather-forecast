@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import {
 	ApiBearerAuth,
 	ApiBody,
@@ -12,6 +12,7 @@ import { LoginDto, LoginResponseDto } from './dto/login.dto';
 import { UserProfileDto } from './dto/profile.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard, LocalAuthGuard } from './guards';
+import { User, UserPayload } from './user.decorator';
 
 @ApiTags('Auth')
 @Controller({
@@ -39,14 +40,13 @@ export class AuthController {
 	@ApiUnauthorizedResponse({
 		description: 'Credenciais inválidas',
 	})
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async login(@Request() req: any): Promise<LoginResponseDto> {
-		return this.authService.login(req.user);
+	async login(@User() user: UserPayload): Promise<LoginResponseDto> {
+		return this.authService.login(user);
 	}
 
 	@Get('profile')
 	@UseGuards(JwtAuthGuard)
-	@ApiBearerAuth('JWT-auth')
+	@ApiBearerAuth()
 	@ApiOperation({
 		summary: 'Obter perfil do usuário',
 		description: 'Endpoint para recuperar informações do perfil do usuário autenticado',
@@ -59,8 +59,7 @@ export class AuthController {
 	@ApiUnauthorizedResponse({
 		description: 'Token de autenticação inválido ou expirado',
 	})
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getProfile(@Request() req: any): UserProfileDto {
-		return req.user;
+	getProfile(@User() user: UserPayload): UserProfileDto {
+		return user;
 	}
 }

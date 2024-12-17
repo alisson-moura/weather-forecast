@@ -37,8 +37,6 @@ describe('Authentication (e2e)', () => {
 	});
 
 	beforeEach(async () => {
-		await prismaService.user.deleteMany();
-
 		await prismaService.user.create({
 			data: {
 				name: 'Usuário Teste',

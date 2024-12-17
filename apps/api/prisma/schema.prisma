@@ -14,8 +14,30 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String
+  password  String
+  favorites Favorite[]
+}
+
+model City {
+  id       Int        @id @default(autoincrement())
   name     String
-  password String
+  state    String
+  lat      Float
+  lon      Float
+  Favorite Favorite[]
+
+  @@unique([name, state])
+  @@index([name])
+}
+
+model Favorite {
+  userId Int
+  cityId Int
+  user   User @relation(fields: [userId], references: [id])
+  city   City @relation(fields: [cityId], references: [id])
+
+  @@id([userId, cityId])
 }
