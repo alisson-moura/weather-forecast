@@ -25,6 +25,7 @@ export class GeocodingClient {
 						params: {
 							q: `${name},${this.configService.getOrThrow<string>('OPENWEATHER_COUNTRY_CODE')}`,
 							appid: this.configService.getOrThrow<string>('OPENWEATHER_API_KEY'),
+							limit: 5,
 						},
 					},
 				),
