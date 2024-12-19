@@ -68,6 +68,7 @@ describe('Profile Endpoint (e2e)', () => {
 			expect(response.body).toEqual({
 				id: testUser.id,
 				email: testUser.email,
+				name: testUser.name,
 			});
 		});
 

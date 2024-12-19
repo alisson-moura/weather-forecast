@@ -1,6 +1,6 @@
-import { Search, Cloud, Star, Calendar, User } from 'lucide-react';
+import { Search, Star, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router';
 
 export default function Home() {
@@ -65,23 +65,6 @@ export default function Home() {
 							<Button variant="secondary">
 								<Link to="auth?tab=register">Cadastrar</Link>
 							</Button>
-						</CardContent>
-					</Card>
-				</section>
-
-				<section className="mb-12">
-					<h3 className="text-2xl font-bold mb-4 text-primary">Exemplo de Previsão</h3>
-					<Card>
-						<CardHeader>
-							<CardTitle>São Paulo - Hoje</CardTitle>
-							<CardDescription>Atualizado às 14:00</CardDescription>
-						</CardHeader>
-						<CardContent className="flex justify-between items-center">
-							<div>
-								<p className="text-4xl font-bold">23°C</p>
-								<p className="text-xl text-muted-foreground">Parcialmente nublado</p>
-							</div>
-							<Cloud className="h-16 w-16 text-primary" />
 						</CardContent>
 					</Card>
 				</section>
