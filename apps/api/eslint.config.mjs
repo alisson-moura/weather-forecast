@@ -30,7 +30,7 @@ export default [
 			sourceType: 'module',
 
 			parserOptions: {
-				project: '/home/alisson/projects/weather-forecast/apps/api/tsconfig.json',
+				project: `${__dirname}/tsconfig.json`,
 			},
 		},
 
