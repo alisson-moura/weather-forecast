@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { getCitiesByName } from '@/api/get-cities-by-name';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -19,6 +20,7 @@ export function SearchCity() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [showList, setShowList] = useState(false);
 
+	const navigate = useNavigate();
 	const { data, error, isFetching, refetch } = useQuery({
 		queryKey: [`city-${searchTerm}`],
 		enabled: false,
@@ -64,6 +66,10 @@ export function SearchCity() {
 									latitude={city.lat}
 									longitude={city.lon}
 									onAddToFavorites={() => {}}
+									onNavigateToForecast={() => {
+										setShowList(false);
+										navigate(`/forecasts?lat=${city.lat}&lon=${city.lon}`);
+									}}
 								/>
 							))}
 						</div>

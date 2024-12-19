@@ -6,8 +6,8 @@ import { ptBR } from 'date-fns/locale';
 import { useQuery } from '@tanstack/react-query';
 import { getForecasts, List } from '@/api/get-forecasts';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/header';
 import { useSearchParams } from 'react-router';
+import { useAuth } from '@/hooks/useAuth';
 
 const WeatherIcon = ({ icon }: { icon: string }) => {
 	return (
@@ -35,6 +35,7 @@ const DailyForecast = ({ day, forecasts }: { day: Date; forecasts: List[] }) => 
 };
 
 export default function Forecast() {
+	const { token } = useAuth();
 	const [searchParams] = useSearchParams();
 	const lat = parseFloat(searchParams.get('lat') ?? '0');
 	const lon = parseFloat(searchParams.get('lon') ?? '0');
@@ -47,37 +48,48 @@ export default function Forecast() {
 				lon,
 			}),
 	});
+
 	const [currentDateTime, setCurrentDateTime] = useState(new Date());
-	const [selectedDay, setSelectedDay] = useState(new Date());
+	const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
 	useEffect(() => {
 		const timer = setInterval(() => setCurrentDateTime(new Date()), 1000);
 		return () => clearInterval(timer);
 	}, []);
 
+	useEffect(() => {
+		if (forecasts) {
+			const firstDate = new Date(forecasts.list[0].dt_txt.replace(' ', 'T'));
+			setSelectedDay(firstDate);
+		}
+	}, [forecasts]);
+
 	if (!forecasts) {
 		return <h1>Loading</h1>;
 	}
 
 	const currentWeather = forecasts && forecasts.list[0];
-	const next5Days = Array.from({ length: 5 }, (_, i) => addDays(new Date(), i));
+	const next5Days = Array.from({ length: 5 }, (_, i) =>
+		addDays(new Date(forecasts.list[0].dt_txt.replace(' ', 'T')), i),
+	);
 
 	const selectedDayForecasts = forecasts.list.filter((f) =>
-		f.dt_txt.startsWith(format(selectedDay, 'yyyy-MM-dd')),
+		f.dt_txt.startsWith(format(new Date(forecasts.list[0].dt_txt.replace(' ', 'T')), 'yyyy-MM-dd')),
 	);
 
 	return (
-		<div className="min-h-screen bg-background flex flex-col">
-			<Header />
+		<div className="bg-background flex flex-col">
 			<div className="container mx-auto p-4">
 				<Card className="w-full max-w-4xl mx-auto">
 					<CardHeader className="flex justify-center items-center flex-row">
 						<CardTitle className="flex-1 mr-auto text-2xl text-center font-bold">
 							{forecasts.city.name}
 						</CardTitle>
-						<Button size="icon" variant="outline">
-							<Star />
-						</Button>
+						{token && (
+							<Button size="icon" variant="outline">
+								<Star />
+							</Button>
+						)}
 					</CardHeader>
 					<CardContent>
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -114,9 +126,9 @@ export default function Forecast() {
 										<button
 											key={index}
 											onClick={() => setSelectedDay(day)}
-											className={`focus:outline-none ${day.toDateString() === selectedDay.toDateString() ? 'bg-foreground text-primary-foreground' : ''}`}
+											className={`focus:outline-none ${selectedDay && day.toDateString() === selectedDay.toDateString() ? 'bg-foreground text-primary-foreground' : ''}`}
 										>
-											<DailyForecast day={day} forecasts={forecasts.list} />
+											{selectedDay && <DailyForecast day={day} forecasts={forecasts.list} />}
 										</button>
 									))}
 								</div>
@@ -125,7 +137,8 @@ export default function Forecast() {
 
 						<div className="mt-6">
 							<h3 className="text-xl font-semibold">
-								Previsões para {format(selectedDay, "EEEE, d 'de' MMMM", { locale: ptBR })}
+								Previsões para{' '}
+								{selectedDay && format(selectedDay, "EEEE, d 'de' MMMM", { locale: ptBR })}
 							</h3>
 							<div className="flex gap-4 mb-4">
 								<span className="text-sm">

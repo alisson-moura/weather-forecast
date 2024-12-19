@@ -2,11 +2,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RegisterForm } from './register-form';
 import { LoginForm } from './login-form';
+import { useSearchParams } from 'react-router';
 
 export function Auth() {
+	const [searchParams] = useSearchParams();
+
 	return (
 		<div className="w-screen h-screen flex justify-center items-center">
-			<Tabs defaultValue="login" className="w-[400px] p-2">
+			<Tabs defaultValue={`${searchParams.get('tab') ?? 'login'}`} className="w-[400px] p-2">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="login">Login</TabsTrigger>
 					<TabsTrigger value="register">Cadastro</TabsTrigger>

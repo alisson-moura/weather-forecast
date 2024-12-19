@@ -2,7 +2,10 @@ export interface LoginResponse {
 	access_token: string;
 }
 
-export async function loginUser(input: { email: string; password: string }): Promise<string> {
+export async function loginUser(input: {
+	email: string;
+	password: string;
+}): Promise<LoginResponse> {
 	const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
 		method: 'POST',
 		headers: {
@@ -19,5 +22,5 @@ export async function loginUser(input: { email: string; password: string }): Pro
 	}
 
 	const data: LoginResponse = await response.json();
-	return data.access_token;
+	return data;
 }

@@ -1,17 +1,22 @@
 import { Button } from './ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { MapPin, ThermometerSun, Star } from 'lucide-react';
-import { Link } from 'react-router';
+import { useAddFavoriteCity } from '@/hooks/useAddFavorite';
+import { useAuth } from '@/hooks/useAuth';
+import { MapPin, ThermometerSun, Star, Loader2 } from 'lucide-react';
 
 interface CityCardProps {
 	name: string;
 	state: string;
-	latitude?: number;
-	longitude?: number;
+	latitude: number;
+	longitude: number;
 	onAddToFavorites: () => void;
+	onNavigateToForecast: () => void;
 }
 
 export default function CityCard(props: CityCardProps) {
+	const { token } = useAuth();
+	const { isPending, mutate } = useAddFavoriteCity();
+
 	return (
 		<Card className="w-full  overflow-hidden">
 			<div className="flex flex-col ">
@@ -33,16 +38,33 @@ export default function CityCard(props: CityCardProps) {
 					</div>
 				</CardContent>
 				<CardFooter className="z-10 flex flex-col justify-center gap-4 p-4 bg-muted">
-					<Button asChild className="w-full">
-						<Link to={`/forecast?lat=${props.latitude}&lon=${props.longitude}`}>
-							<ThermometerSun className="mr-2 h-4 w-4" />
-							Ver Previsões
-						</Link>
+					<Button onClick={props.onNavigateToForecast} className="w-full">
+						<ThermometerSun className="mr-2 h-4 w-4" />
+						Ver Previsões
 					</Button>
-					<Button onClick={props.onAddToFavorites} variant="outline" className="w-full">
-						<Star className="mr-2 h-4 w-4" />
-						Adicionar aos favoritos
-					</Button>
+					{token && (
+						<Button
+							onClick={() =>
+								mutate({
+									lat: props.latitude,
+									lon: props.longitude,
+									name: props.name,
+									state: props.state,
+								})
+							}
+							variant="outline"
+							className="w-full"
+						>
+							{isPending ? (
+								<Loader2 className="animate-spin" />
+							) : (
+								<span className="flex items-center">
+									<Star className="mr-2 h-4 w-4" />
+									Adicionar aos favoritos
+								</span>
+							)}
+						</Button>
+					)}
 				</CardFooter>
 			</div>
 		</Card>

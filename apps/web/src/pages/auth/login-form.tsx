@@ -15,6 +15,9 @@ import { useMutation } from '@tanstack/react-query';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { loginUser } from '@/api/login-user';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 const loginFormSchema = z.object({
 	email: z.string().email('E-mail inválido. Insira um endereço de e-mail válido.'),
@@ -27,7 +30,9 @@ const loginFormSchema = z.object({
 type LoginFormInput = z.infer<typeof loginFormSchema>;
 
 export function LoginForm() {
-	const { mutate, isPending, error } = useMutation({
+	const { login } = useAuth();
+	const navigate = useNavigate();
+	const { mutate, isPending, error, data } = useMutation({
 		mutationFn: async (input: LoginFormInput) => await loginUser(input),
 	});
 	const form = useForm<LoginFormInput>({
@@ -37,6 +42,13 @@ export function LoginForm() {
 			password: '',
 		},
 	});
+
+	useEffect(() => {
+		if (data && data.access_token) {
+			login(data.access_token);
+			navigate('/');
+		}
+	}, [data, login, navigate]);
 
 	function onSubmit(input: LoginFormInput) {
 		mutate(input);
